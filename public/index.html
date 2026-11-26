@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f3">
+  <title>휠웨이 | 더 편안한 이동을 위해</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="휠웨이 홈"><span class="brand-mark">↗</span> wheelway<span class="brand-dot">.</span></a>
+    <span class="top-label">모두를 위한 이동의 시작</span>
+    <span class="badge">BETA</span>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow"><span class="spark">✳</span> YOUR WAY, YOUR PACE</p>
+        <h1>오늘은 어디로 <span>가볼까요?</span></h1>
+        <p>나에게 맞는 이동 정보를 한곳에서 확인해 보세요.</p></div>
+      <div class="intro-note"><span>✦</span> 조금 더 편안한<br>이동을 위해</div>
+    </section>
+    <div class="layout">
+      <aside class="sidebar">
+        <section class="card route-card">
+          <div class="card-head"><div><p class="overline">PLAN YOUR TRIP</p><h2>경로 찾기</h2></div><span class="round-icon">↗</span></div>
+          <p class="muted">출발지와 도착지의 도로명 주소를 입력해 주세요.</p>
+          <form id="route-form">
+            <label for="start">출발지</label>
+            <div class="input-wrap"><span class="point green"></span><input id="start" name="start" placeholder="예: 서울특별시 중구 세종대로 110" required maxlength="200"></div>
+            <label for="goal">도착지</label>
+            <div class="input-wrap"><span class="point dark"></span><input id="goal" name="goal" placeholder="예: 서울특별시 종로구 사직로 161" required maxlength="200"></div>
+            <button class="primary" type="submit">경로 확인하기 <span>↗</span></button>
+          </form>
+          <p class="notice">현재 자동차 경로만 제공됩니다. 휠체어 통행 가능 여부는 확인되지 않았습니다.</p>
+        </section>
+        <section class="card battery-card">
+          <div class="card-head"><div><p class="overline">POWER CHECK</p><h2>배터리 체크</h2></div><span class="round-icon pale">⚡</span></div>
+          <p class="muted">전동휠체어의 예상 이동 가능 거리를 확인하세요.</p>
+          <div class="battery-fields"><label>현재 잔량 (%)<input id="battery" type="number" min="0" max="100" value="70"></label><label>완충 시 주행거리 (km)<input id="full-range" type="number" min="0.1" max="300" step="0.1" placeholder="예: 20"></label></div>
+          <div class="battery-result"><span>단순 추정 잔여 거리</span><strong id="remaining">입력 필요</strong></div>
+          <p class="tiny">잔량과 완충 주행거리의 단순 계산입니다. 경사, 배터리 상태, 날씨에 따라 달라지며 실제 도달 가능성을 보장하지 않습니다.</p>
+        </section>
+      </aside>
+      <div class="content">
+        <section class="map-card">
+          <div class="map-head"><div><p class="overline">EXPLORE THE MAP</p><h2>나의 이동 지도</h2></div><span class="map-status" id="map-status"><span></span> 지도 연결 확인 중</span></div>
+          <div id="map" aria-label="네이버 지도"></div>
+          <div id="map-placeholder" class="map-placeholder"><div class="placeholder-icon">⌁</div><strong>지도를 준비하고 있어요</strong><p>네이버 Maps API 키를 설정하면<br>이곳에 지도가 표시됩니다.</p></div>
+          <div class="map-caption"><span><i class="legend-line"></i> 자동차 경로</span><span>접근성 미확인 · 실제 도로 상황을 확인하세요</span></div>
+        </section>
+        <div class="info-grid">
+          <section class="card info-card">
+            <div class="card-head"><div><p class="overline">YOUR ROUTE</p><h2>이동 정보</h2></div><span class="round-icon">◷</span></div>
+            <div id="route-result" class="empty-state"><span class="empty-icon">↗</span><strong>어디로 이동하시나요?</strong><p>주소를 입력하면 자동차 경로와<br>예상 소요 시간을 확인할 수 있어요.</p></div>
+            <p id="route-message" class="message" role="status" aria-live="polite"></p>
+            <div class="disclaimer"><strong>휠체어 경로 안내 준비 중</strong><br>보도, 턱, 경사 및 공사 정보가 없어 이동 가능 여부와 도보 시간은 제공하지 않습니다.</div>
+          </section>
+          <section class="card info-card">
+            <div class="card-head"><div><p class="overline">LOW-FLOOR BUS</p><h2>저상버스 도착</h2></div><span class="round-icon pale">▤</span></div>
+            <p class="muted">TAGO 도시코드와 정류소 ID로 조회합니다.</p>
+            <form id="bus-form"><div class="battery-fields"><label>도시코드<input id="city" inputmode="numeric" placeholder="예: 25" required></label><label>정류소 ID<input id="stop" placeholder="예: DJB8001793" required></label></div><button class="secondary" type="submit">도착 정보 조회 <span>↗</span></button></form>
+            <p id="bus-result" class="message" role="status" aria-live="polite">공공데이터 API 키와 버스도착정보 서비스 승인이 필요합니다.</p>
+            <p class="tiny">제공 지역과 실시간 정보는 TAGO 및 지자체 상황에 따라 달라집니다.</p>
+          </section>
+        </div>
+        <section class="card charge-card">
+          <div class="card-head"><div><p class="overline">CHARGING SPOTS</p><h2>충전소 살펴보기</h2></div><span class="round-icon pale">⚡</span></div>
+          <p class="muted">공공데이터포털의 전국전동휠체어급속충전기 표준데이터 CSV를 불러오면 출발지에서 가까운 충전소를 보여드려요.</p>
+          <div class="charge-actions"><label class="secondary file-label">충전소 CSV 불러오기 ↗<input id="charger-file" type="file" accept=".csv,text/csv"></label><a href="https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15034533" target="_blank" rel="noopener noreferrer">데이터 다운로드 ↗</a></div>
+          <p id="charger-message" class="message" role="status" aria-live="polite">파일을 선택하고 경로를 조회해 주세요.</p>
+          <div id="chargers"></div>
+          <p class="tiny">거리는 직선거리이며 접근 가능한 경로나 도착 시간이 아닙니다. 운영시간은 데이터 기준으로 공휴일·임시 휴무가 다를 수 있습니다. 실시간 사용 여부는 제공되지 않으니 방문 전 전화로 확인하세요.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer><span class="brand">wheelway<span class="brand-dot">.</span></span><span>모두의 이동이 더 자유로워지는 날까지.</span><span>정보는 참고용이며 현장 상황을 우선 확인하세요.</span></footer>
+</body>
+</html>
